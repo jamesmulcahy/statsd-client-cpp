@@ -94,6 +94,13 @@ int StatsdClient::init()
         return -1;
     }
 
+    // Don't block on stats sends....
+    int flags = fcntl(d->sock, F_GETFL, 0);
+    if (fcntl(d->sock, F_SETFL, flags | O_NONBLOCK) == -1) {
+      snprintf(d->errmsg, sizeof(d->errmsg), "could not enabled non blocking IO, err=%m");
+      return -1;
+    }
+
     memset(&d->server, 0, sizeof(d->server));
     d->server.sin_family = AF_INET;
     d->server.sin_port = htons(d->port);
