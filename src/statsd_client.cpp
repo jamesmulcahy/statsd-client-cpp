@@ -50,6 +50,16 @@ StatsdClient::StatsdClient(const string& host, int port, const string& ns)
     config(host, port, ns);
     srandom(time(NULL));
 }
+       
+StatsdClient::StatsdClient(const StatsdClient &original)
+{
+  // Must create our own storage for ClientData object; don't share original's
+  d = new _StatsdClientData;
+  *d = *original.d;
+
+  // Don't share original's socket, either.
+  d->sock = -1;
+}
 
 StatsdClient::~StatsdClient()
 {

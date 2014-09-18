@@ -14,6 +14,7 @@ struct _StatsdClientData;
 class StatsdClient {
     public:
         StatsdClient(const std::string& host="127.0.0.1", int port=8125, const std::string& ns = "");
+        StatsdClient(const StatsdClient &original);
         ~StatsdClient();
 
     public:
