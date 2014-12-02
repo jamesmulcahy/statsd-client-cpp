@@ -58,6 +58,7 @@ StatsdClient::StatsdClient(const StatsdClient &original)
   *d = *original.d;
 
   // Don't share original's socket, either.
+  d->init = false;
   d->sock = -1;
 }
 
